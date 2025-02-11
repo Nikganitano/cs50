@@ -1,0 +1,141 @@
+/* Universal Styles */
+body {
+    margin: 0px;
+    background-color: whitesmoke;
+    font-family: 'Open Sans', cursive;
+    text-align: center;
+}
+
+.secondary-background {
+    background-color: snow;
+}
+
+.tagline {
+    font-family: 'Quicksand', sans-serif;
+    color: grey;
+    line-height: 125px;
+}
+
+/* Header */
+h1 {
+    margin: 0;
+    background-color: grey;
+    line-height: 100px;
+    color: khaki;
+}
+
+h2 {
+    margin: 10px;
+}
+
+/* App Container */
+.container {
+    border: 2px solid snow;
+    display: flex;
+}
+
+/* To Do Section */
+.week {
+    display: inline-flex;
+    flex-grow: 3;
+    flex-direction: column;
+}
+
+.row {
+    min-height: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.square {
+    width: 200px;
+    /* Adjusted width */
+    height: 300px;
+    /* Adjusted height */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.day.square {
+    background-color: steelblue;
+    border: 1px solid white;
+}
+
+.task.square {
+    background-color: khaki;
+    border: 1px solid white;
+    flex: 1;
+    margin-left: 10px;
+    padding: 10px;
+    overflow-y: auto;
+    /* Allow scrolling if content overflows */
+}
+
+.task.square ul {
+    list-style-type: disc;
+    /* Bullet points */
+    padding-left: 20px;
+    /* Indent bullet points */
+    margin: 0;
+    /* Remove default margin */
+}
+
+#task-input {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    /* Space below the input section */
+}
+
+#task-input select,
+#task-input input {
+    margin-right: 10px;
+    /* Space between elements */
+    padding: 5px;
+    /* Padding inside the input and select */
+    font-size: 16px;
+    /* Font size for better readability */
+}
+
+#task-input button {
+    padding: 5px 10px;
+    /* Padding inside the button */
+    font-size: 16px;
+    /* Font size for better readability */
+}
+
+/* Selected Day Styling */
+.selected-day {
+    border: 2px solid red;
+    /* Example styling */
+    background-color: lightyellow;
+    /* Example background color */
+}
+
+/* Footer */
+footer {
+    font-size: 24px;
+}
+
+/* Alert Placeholder Styling */
+#liveAlertPlaceholderAdd {
+    margin: 20px 0;
+    /* Space above and below the alert placeholder */
+}
+
+/* Header Styling */
+header {
+    margin-bottom: 20px;
+    /* Space below the header */
+}
+
+/* Task Square Styling */
+.task-square {
+    margin-top: 20px;
+    /* Space above the task square */
+}

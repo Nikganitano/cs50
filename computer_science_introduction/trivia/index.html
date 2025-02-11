@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+        <script>
+            // Wait for DOM content to load
+            document.addEventListener('DOMContentLoaded', function () {
+                // Function to reset the background color of all buttons
+                function resetButtonColors() {
+                    let buttons = document.querySelectorAll('.correct, .incorrect');
+                    buttons.forEach(button => {
+                        button.style.backgroundColor = ''; // Reset to default color
+                    });
+                }
+
+                // Get all elements with class "correct"
+                let corrects = document.querySelectorAll('.correct');
+
+                // Add event listeners to each correct button
+                for (let i = 0; i < corrects.length; i++) {
+                    corrects[i].addEventListener('click', function () {
+                        resetButtonColors(); // Reset colors before setting the new one
+
+                        // Set background color to green
+                        corrects[i].style.backgroundColor = 'green';
+
+                        // Go to parent element of correct button and find the first element with class "feedback" which has that parent
+                        corrects[i].parentElement.querySelector('.feedback').innerHTML = 'Correct!';
+                    });
+                }
+
+                // When any incorrect answer is clicked, change color to red.
+                let incorrects = document.querySelectorAll('.incorrect');
+                for (let i = 0; i < incorrects.length; i++) {
+                    incorrects[i].addEventListener('click', function () {
+                        resetButtonColors(); // Reset colors before setting the new one
+
+                        // Set background color to red
+                        incorrects[i].style.backgroundColor = 'red';
+
+                        // Go to parent element of incorrect button and find the first element with class "feedback" which has that parent
+                        incorrects[i].parentElement.querySelector('.feedback').innerHTML = 'Incorrect';
+                    });
+                }
+            });   
+        </script>
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+                <!-- TODO: Add multiple choice question here -->
+                <h3>What is JavaScript?</h3>
+                <button class="correct">A programming language</button>
+                <button class="incorrect">A type of coffee</button>
+                <button class="incorrect">A type of car</button>
+                <p class="feedback"></p>
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+                <!-- TODO: Add free response question here -->
+                <h3>Is JavaScript mostly used for backend or frontend?</h3>
+                <input type="text">
+                <button id="check">Check answer</button>
+                <p class="feedback"></p>
+            </div>
+        </div>
+    </body>
+
+</html>

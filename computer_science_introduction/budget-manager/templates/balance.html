@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Budget Movements
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <a href="javascript:history.back()" class="btn btn-secondary mb-3">Back</a>
+    <h2 class="text-center">Budget Movements</h2>
+    {% for category, movements in movements_by_category.items() %}
+    <h3>{{ category }}</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for movement in movements %}
+            <tr>
+                <td>{{ movement.date }}</td>
+                <td>{{ movement.amount }}</td>
+                <td>{{ movement.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Total</th>
+                <th>{{ totals_by_category[category] }}</th>
+                <th></th>
+            </tr>
+        </tfoot>
+    </table>
+    {% endfor %}
+</div>
+{% endblock %}

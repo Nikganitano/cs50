@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+        <title>My Webpage</title>
+    </head>
+
+    <body>
+        <!-- Header -->
+        <div id='header'>
+            <h1>To Do or Not To Do</h1>
+            <h2 class='tagline'>(your priorities at a glance)</h2>
+        </div>
+
+        <div id='task-input'>
+            <select id='day-select'>
+                <option value='monday'>Monday</option>
+                <option value='tuesday'>Tuesday</option>
+                <option value='wednesday'>Wednesday</option>
+                <option value='thursday'>Thursday</option>
+                <option value='friday'>Friday</option>
+                <option value='saturday'>Saturday</option>
+                <option value='sunday'>Sunday</option>
+            </select>
+            <input type='text' id='new-task' placeholder='Write a new task here...'>
+            <button id='add-task'>Add</button>
+            <button id='clear-tasks'>Clear</button>
+        </div>
+
+        <div id="liveAlertPlaceholderAdd"></div>
+
+        <div class='week'>
+            <div class='row'>
+                <div class='task square' id='monday'>
+                    <h3>Monday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='tuesday'>
+                    <h3>Tuesday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='wednesday'>
+                    <h3>Wednesday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='thursday'>
+                    <h3>Thursday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='friday'>
+                    <h3>Friday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='saturday'>
+                    <h3>Saturday</h3>
+                    <ul></ul>
+                </div>
+                <div class='task square' id='sunday'>
+                    <h3>Sunday</h3>
+                    <ul></ul>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer>
+            <span class='tagline'>What a busy week!</span>
+        </footer>
+
+        <!-- JavaScript -->
+        <script>
+            function showAlert(message, type, autoCollapse = true) {
+                const alertPlaceholder = document.getElementById('liveAlertPlaceholderAdd');
+                // Clear existing alerts
+                alertPlaceholder.innerHTML = '';
+
+                // Create new alert
+                const wrapper = document.createElement('div');
+                wrapper.className = 'collapse show';
+                wrapper.innerHTML = [
+                    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                    `   <div>${message}</div>`,
+                    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                    '</div>'
+                ].join('');
+
+                // Append new alert
+                alertPlaceholder.append(wrapper);
+
+                // Automatically collapse the alert after 3 seconds if autoCollapse is true
+                if (autoCollapse) {
+                    setTimeout(() => {
+                        wrapper.classList.remove('show');
+                    }, 3000);
+                }
+            }
+
+            function addTask() {
+                // Get the task input
+                var taskInput = document.getElementById('new-task');
+                var task = taskInput.value.trim().toLowerCase(); // Convert input to lowercase
+
+                // Check if the task input is not empty
+                if (task === "") {
+                    showAlert("Please enter a task.", 'warning');
+                    return;
+                }
+
+                // Get the selected day
+                var selectedDay = document.getElementById('day-select').value;
+
+                // Get the task list for the selected day
+                var taskList = document.querySelector('#' + selectedDay + ' ul');
+
+                // Check for duplication (case-insensitive)
+                var tasks = taskList.getElementsByTagName('li');
+                for (var i = 0; i < tasks.length; i++) {
+                    if (tasks[i].textContent.toLowerCase() === task) { // Convert existing task to lowercase
+                        showAlert('Task already exists in the same day.', 'warning', false);
+                        return;
+                    }
+                }
+
+                // Create a new task list item
+                var newTask = document.createElement('li');
+                newTask.textContent = taskInput.value.trim(); // Use original case for display
+
+                // Check if the task list is empty and add a horizontal rule if it is
+                if (taskList.children.length === 0) {
+                    var hr = document.createElement('hr');
+                    taskList.appendChild(hr);
+                }
+
+                // Add the new task to the selected day's task list
+                taskList.appendChild(newTask);
+
+                // Clear the task input field
+                taskInput.value = "";
+
+                // Show success alert
+                showAlert('Task added!', 'success');
+            }
+
+            function clearTasks() {
+                // Get the selected day
+                var selectedDay = document.getElementById('day-select').value;
+
+                // Get the task list for the selected day
+                var taskList = document.querySelector('#' + selectedDay + ' ul');
+
+                // Check if there are any tasks to clear
+                if (taskList.children.length === 0) {
+                    showAlert("Nothing to clear.", 'warning');
+                    return;
+                }
+
+                // Clear all tasks
+                taskList.innerHTML = "";
+
+                // Show danger alert for tasks cleared
+                showAlert('Tasks cleared!', 'danger');
+            }
+
+            // Add a new task when the user clicks the 'Add' button
+            document.getElementById('add-task').addEventListener('click', addTask);
+
+            // Clear tasks when the user clicks the 'Clear' button
+            document.getElementById('clear-tasks').addEventListener('click', clearTasks);
+        </script>
+    </body>
+
+</html>

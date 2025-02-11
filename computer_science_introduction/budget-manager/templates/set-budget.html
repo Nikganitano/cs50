@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Set Budget
+{% endblock %}
+
+{% block main %}
+<h1>Set Budget</h1>
+
+<a href="javascript:history.back()" class="btn btn-secondary mb-3">Back</a>
+
+<div class="alert alert-info" role="alert">
+    Current Budget: {{ "%.2f"|format(budget) }}
+</div>
+
+{% if budget == 0 %}
+<form action="/set-budget" method="post">
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="amount" placeholder="Amount"
+            type="number" step="0.01" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Set Budget</button>
+</form>
+{% elif remaining_cash <= 0 %} <form action="/set-budget" method="post">
+    <div class="mb-3">
+        <input autocomplete="off" autofocus class="form-control mx-auto w-auto" name="amount" placeholder="New Amount"
+            type="number" step="0.01" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Modify Budget</button>
+    </form>
+    {% else %}
+    <div class="alert alert-info" role="alert">
+        You can only set the budget initially or modify it when the remaining cash is 0 or below.
+    </div>
+    {% endif %}
+
+    {% endblock %}

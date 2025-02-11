@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Budget Overview
+{% endblock %}
+
+{% block main %}
+<h1>Budget Overview</h1>
+
+{% if cash <= 0 %} <div class="alert alert-danger" role="alert">
+    Your budget is finished!
+    </div>
+    {% endif %}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Category</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in movements %}
+            <tr>
+                <td>{{ row["category"] }}</td>
+                <td>{{ "%.2f"|format(row["amount"]) }}</td>
+                <td>{{ row["description"] }}</td>
+                <td>{{ row["date"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <th scope="col">Total Amount</th>
+                <th scope="col">{{ "%.2f"|format(total_amount) }}</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <th scope="col">Remaining Cash</th>
+                <th scope="col" class="{% if cash < 0 %}text-danger{% elif cash > 0 %}text-success{% endif %}">
+                    {{ "%.2f"|format(cash) }}
+                </th>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <th scope="col">Current Budget</th>
+                <th scope="col">{{ "%.2f"|format(budget) }}</th>
+            </tr>
+        </tfoot>
+    </table>
+    {% endblock %}

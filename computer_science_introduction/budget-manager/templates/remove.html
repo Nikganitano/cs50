@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Remove Movement
+{% endblock %}
+
+{% block main %}
+<h1>Remove Movement</h1>
+<a href="javascript:history.back()" class="btn btn-secondary mb-3">Back</a>
+<form action="/remove" method="post">
+    <div class="mb-3">
+        <select name="movement_id" class="form-control mx-auto w-auto">
+            {% for movement in movements %}
+            <option value="{{ movement.id }}">{{ movement.category }} - {{ movement.amount }} - {{ movement.date }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <button class="btn btn-primary" type="submit">Remove</button>
+</form>
+{% endblock %}
